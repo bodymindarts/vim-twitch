@@ -19,7 +19,6 @@ describe "RSpec"
     Expect expand('%:p:t') == 'monkey_service_spec.rb'
   end
 
-
   it "finds the production file"
     edit spec/monkey_service_spec.rb
 
