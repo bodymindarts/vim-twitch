@@ -12,7 +12,7 @@ describe "RSpec"
   end
 
   it "switches to the spec file"
-    edit lib/monkey_service.rb
+    edit ./lib/monkey_service.rb
 
     Twitch
 

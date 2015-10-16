@@ -24,7 +24,7 @@ function! s:search_path(path)
   if a:path == '.'
     return ''
   else
-    return './' . substitute(a:path, '^\w*', '*', '') . '*'
+    return './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '*'
   end
 endfunction
 
@@ -39,6 +39,6 @@ function! s:execute_find(search_path, search_file_name)
     let path_arg = "-path '" . a:search_path . "' -mindepth 2"
   end
 
-  let find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
-  return system("find . " . find_args)
+  let g:find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
+  return system("find . " . g:find_args)
 endfunction
