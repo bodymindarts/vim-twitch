@@ -3,17 +3,17 @@ function! twitch#alternate(vim_command)
 
   let search_path = s:search_path(path)
 
-  let file_name = expand('%:t')
+  let file_name = expand('%:t:r')
   if !s:is_test_file(expand('%'))
-    let search_file_name = substitute(file_name, '\.', '_test.', '')
+    let search_file_name = file_name . '_test.*'
     let target_path = s:execute_find(search_path, search_file_name)
 
     if target_path == ''
-      let search_file_name = substitute(file_name, '\.', '_spec.', '')
+      let search_file_name = file_name . '_spec.*'
       let target_path = s:execute_find(search_path, search_file_name)
     end
   else
-    let target_file_name = substitute(file_name, '\v(_spec|_test)', '', '')
+    let target_file_name = substitute(file_name, '\v(_spec|_test)', '', '') . '.*'
     let target_path = s:execute_find(search_path, target_file_name)
   endif
 
