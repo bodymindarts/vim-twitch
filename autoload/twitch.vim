@@ -13,8 +13,8 @@ function! twitch#alternate(vim_command)
       let target_path = s:execute_find(search_path, search_file_name)
     end
   else
-    let target_file_name = substitute(file_name, '\v(_spec|_test)', '', '') . '.*'
-    let target_path = s:execute_find(search_path, target_file_name)
+    let search_file_name = substitute(file_name, '\v(_spec|_test)', '', '') . '.*'
+    let target_path = s:execute_find(search_path, search_file_name)
   endif
 
   exec a:vim_command . ' ' . target_path
