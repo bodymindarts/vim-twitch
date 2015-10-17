@@ -28,7 +28,7 @@ describe "clojure"
   end
 
   it "works for other namespace"
-    edit test/other/core.clj
+    edit test/other/core_test.clj
 
     Twitch
 
