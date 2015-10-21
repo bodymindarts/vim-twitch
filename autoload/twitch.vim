@@ -12,7 +12,7 @@ function! twitch#open_alternate(vim_command)
   endif
 
   if target_path == ''
-    let target_path = input("Not found. File name: ", '', 'file')
+    let target_path = input("Couldn't find alternate file. File name: ", '', 'file')
   endif
 
   exec a:vim_command . ' ' . target_path
