@@ -11,6 +11,10 @@ function! twitch#open_alternate(vim_command)
     let target_path = s:find_prob_file(s:search_path(path), file_name)
   endif
 
+  if target_path == ''
+    let target_path = input("Not found. File name: ", '', 'file')
+  endif
+
   exec a:vim_command . ' ' . target_path
 endfunction
 
@@ -50,6 +54,6 @@ function! s:execute_find(search_path, search_file_name)
     let path_arg = "-path '" . a:search_path . "' -depth " . path_sections
   end
 
-  let find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
-  return system("find . " . find_args)
+  let g:find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
+  return system("find . " . g:find_args)
 endfunction
