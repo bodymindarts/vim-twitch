@@ -50,6 +50,6 @@ function! s:execute_find(search_path, search_file_name)
     let path_arg = "-path '" . a:search_path . "' -depth " . path_sections
   end
 
-  let g:find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
-  return system("find . " . g:find_args)
+  let find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
+  return system("find . " . find_args)
 endfunction
