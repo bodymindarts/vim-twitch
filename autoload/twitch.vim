@@ -22,7 +22,7 @@ function! s:search_path(path)
   if a:path == '.'
     return ''
   else
-    return './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '*'
+    return './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '/*'
   end
 endfunction
 
@@ -46,7 +46,8 @@ function! s:execute_find(search_path, search_file_name)
   if a:search_path == ''
     let path_arg = '-depth 1'
   else
-    let path_arg = "-path '" . a:search_path . "' -mindepth 2"
+    let path_sections = strlen(substitute(a:search_path, '[^/]', '', 'g'))
+    let path_arg = "-path '" . a:search_path . "' -depth " . path_sections
   end
 
   let g:find_args = path_arg . " -name '" . a:search_file_name . "' -type f"
