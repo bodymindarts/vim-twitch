@@ -14,8 +14,8 @@ Plug[in] 'bodymindarts/vim-twitch'
 Add your preferred mappings to your `.vimrc` file:
 
 ```vim
-nmap <silent> <leader>t :Twitch<CR>
-nmap <silent> <leader>vt :VTwitch<CR>
+nnoremap <silent> <leader>t :Twitch<CR>
+nnoremap <silent> <leader>vt :VTwitch<CR>
 ```
 
 |Command | Description
