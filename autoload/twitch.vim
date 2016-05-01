@@ -1,4 +1,4 @@
-let g:twitch#test_file_endings = ['_test', '_spec', 'Test', 'Tests']
+let g:twitch#test_file_endings = ['_test', '_spec', 'Tests', 'Test']
 
 function! twitch#open_alternate(vim_command)
   let file_path = expand('%')

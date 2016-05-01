@@ -16,11 +16,11 @@ describe "scala"
 
     Twitch
 
-    Expect expand('%') == './src/test/package/HelloTest.scala'
+    Expect expand('%') == './src/test/package/HelloTests.scala'
   end
 
   it "finds the production file"
-    edit src/test/package/HelloTest.scala
+    edit src/test/package/HelloTests.scala
 
     Twitch
 
