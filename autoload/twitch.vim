@@ -1,15 +1,17 @@
-let g:twitch#test_file_endings = ['_test', '_spec']
+let g:twitch#test_file_endings = ['_test', '_spec', 'Test', 'Tests']
 
 function! twitch#open_alternate(vim_command)
   let file_path = expand('%')
   let path = expand('%:h')
   let file_name = expand('%:t:r')
 
-  if file_path !~ s:test_file_test()
-    let target_path = s:find_test_file(s:search_path(path), file_name)
-  else
-    let target_path = s:find_prob_file(s:search_path(path), file_name)
-  endif
+  for path in s:search_paths(path)
+    if file_path !~ s:test_file_test()
+      let target_path = s:find_test_file(path, file_name)
+    else
+      let target_path = s:find_prob_file(path, file_name)
+    endif
+  endfor
 
   if target_path == ''
     let target_path = input("Couldn't find alternate file. File name: ", '', 'file')
@@ -24,11 +26,20 @@ function! s:test_file_test()
   return '\v(' . join(g:twitch#test_file_endings, '|') . ')'
 endfunction
 
-function! s:search_path(path)
+function! s:search_paths(path)
+  let paths = []
   if a:path == '.'
-    return ''
+    return paths + ['']
   else
-    return './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '/*'
+    let base_path = './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '/*'
+    let paths +=  [ base_path ]
+    if a:path =~ '/main/'
+      let paths += [ substitute(base_path, '/main/', '/test/', '') ]
+    end
+    if a:path =~ '/test/'
+      let paths += [ substitute(base_path, '/test/', '/main/', '') ]
+    end
+    return paths
   end
 endfunction
 
