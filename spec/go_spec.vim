@@ -34,4 +34,12 @@ describe "go"
 
     Expect expand('%') == './package/file_test.go'
   end
+
+  it "works for in other file"
+    edit other/file.go
+
+    Twitch
+
+    Expect expand('%') == './other/file_test.go'
+  end
 end

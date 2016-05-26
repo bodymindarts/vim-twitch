@@ -9,7 +9,10 @@ function! twitch#open_alternate(vim_command)
     if file_path !~ s:test_file_test()
       let target_path = s:find_test_file(path, file_name)
     else
-      let target_path = s:find_prob_file(path, file_name)
+      let target_path = s:find_prod_file(path, file_name)
+    endif
+    if target_path != ''
+      break
     endif
   endfor
 
@@ -32,7 +35,7 @@ function! s:search_paths(path)
     return paths + ['']
   else
     let base_path = './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '/*'
-    let paths +=  [ base_path ]
+    let paths +=  [ './' . a:path . '/*' , base_path ]
     if a:path =~ '/main/'
       let paths += [ substitute(base_path, '/main/', '/test/', '') ]
     end
@@ -54,7 +57,7 @@ function! s:find_test_file(search_path, file_name)
   endfor
 endfunction
 
-function! s:find_prob_file(search_path, file_name)
+function! s:find_prod_file(search_path, file_name)
     let search_file_name = substitute(a:file_name, s:test_file_test(), '', '') . '.*'
     return s:execute_find(a:search_path, search_file_name)
 endfunction
