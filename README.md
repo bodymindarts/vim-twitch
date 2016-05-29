@@ -22,3 +22,4 @@ nnoremap <silent> <leader>vt :VTwitch<CR>
 |:------|:-------|
 |`:Twitch`| If you are in a test file it will open the associated production file and vica versa |
 |`:VTwitch`| Like `:Twitch` just that it will open the file in a vertical split |
+|`:STwitch`| Like `:Twitch` just that it will open the file in a horizontal split |
