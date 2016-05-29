@@ -27,7 +27,7 @@ describe "go"
     Expect expand('%') == 'file.go'
   end
 
-  it "works for in package"
+  it "works in a package"
     edit package/file.go
 
     Twitch
@@ -35,7 +35,7 @@ describe "go"
     Expect expand('%') == './package/file_test.go'
   end
 
-  it "works for in other file"
+  it "works for in another package"
     edit other/file.go
 
     Twitch
