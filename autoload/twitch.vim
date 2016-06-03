@@ -21,7 +21,11 @@ function! twitch#open_alternate(vim_command)
   endif
 
   if target_path != ''
-    exec a:vim_command . ' ' . target_path
+    try
+      exec a:vim_command . ' ' . target_path
+    catch
+      echoerr "Vim-Twitch ERR: '" . g:find_cmd . "' returned '" . target_path . "."
+    endtry
   end
 endfunction
 
