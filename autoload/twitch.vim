@@ -48,15 +48,20 @@ function! s:search_paths(path)
   if a:path == '.'
     return paths + ['']
   else
-    " Remove beginning ./
-    let same_dir = substitute(a:path, '^\.\/', '', '')
-    let base_path = './' . substitute(same_dir, '^\w*', '*', '') . '/*'
-    let paths +=  [ './' . same_dir . '/*' , base_path ]
-    if a:path =~ '/main/'
-      let paths += [ substitute(base_path, '/main/', '/test/', '') ]
+    " we want all paths to begin with ./ and end with /*
+    let raw_path = substitute(a:path, '^\.\/', '', '')
+
+    let same_dir = './' . raw_path . '/*'
+    let fuzzy_first_dir = './' . substitute(raw_path, '^\w*', '*', '') . '/*'
+
+    let paths +=  [  same_dir, fuzzy_first_dir ]
+
+    " For maven type projects
+    if raw_path =~ '/main/'
+      let paths += [ substitute(same_dir, '/main/', '/test/', '') ]
     end
-    if a:path =~ '/test/'
-      let paths += [ substitute(base_path, '/test/', '/main/', '') ]
+    if raw_path =~ '/test/'
+      let paths += [ substitute(same_dir, '/test/', '/main/', '') ]
     end
     return paths
   end
