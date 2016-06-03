@@ -1,6 +1,9 @@
 let g:twitch#test_file_endings = ['_test', '_spec', 'Tests', 'Test']
 
 function! twitch#open_alternate(vim_command)
+  let g:twitch#last_commands = []
+  let g:twitch#found_paths = []
+
   let file_path = expand('%')
   let path = expand('%:h')
   let file_name = expand('%:t:r')
@@ -11,6 +14,7 @@ function! twitch#open_alternate(vim_command)
     else
       let target_path = s:find_prod_file(path, file_name)
     endif
+    let g:twitch#found_paths += [target_path]
     if target_path != ''
       break
     endif
@@ -22,9 +26,15 @@ function! twitch#open_alternate(vim_command)
 
   if target_path != ''
     try
+      echom g:twitch#find_cmd
       exec a:vim_command . ' ' . target_path
     catch
-      echoerr "Vim-Twitch ERR: '" . g:find_cmd . "' returned '" . target_path . "."
+      echoerr "Vim-Twitch ERR: couldn't open file"
+      let n = 0
+      while n <= len(g:last_commands)
+        echoerr "Vim-Twitch ERR: '" . get(g:twitch#last_commands, n) . "' returned '" . get(g:twitch#found_paths, n) . "'."
+        let n += 1
+      endwhile
     endtry
   end
 endfunction
@@ -74,6 +84,7 @@ function! s:execute_find(search_path, search_file_name)
     let path_arg = "-path '" . a:search_path . "' -depth " . path_sections
   end
 
-  let g:find_cmd = "find . " . path_arg . " -name '" . a:search_file_name . "' -type f"
-  return system(g:find_cmd)
+  let g:twitch#find_cmd = "find . " . path_arg . " -name '" . a:search_file_name . "' -type f"
+  let g:twitch#last_commands += [g:twitch#find_cmd]
+  return system(g:twitch#find_cmd)
 endfunction
