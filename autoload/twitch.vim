@@ -48,8 +48,10 @@ function! s:search_paths(path)
   if a:path == '.'
     return paths + ['']
   else
-    let base_path = './' . substitute(a:path, '\v^(\./)?\w*', '*', '') . '/*'
-    let paths +=  [ './' . a:path . '/*' , base_path ]
+    " Remove beginning ./
+    let same_dir = substitute(a:path, '^\.\/', '', '')
+    let base_path = './' . substitute(same_dir, '^\w*', '*', '') . '/*'
+    let paths +=  [ './' . same_dir . '/*' , base_path ]
     if a:path =~ '/main/'
       let paths += [ substitute(base_path, '/main/', '/test/', '') ]
     end
