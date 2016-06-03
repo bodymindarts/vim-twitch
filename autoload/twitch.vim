@@ -30,7 +30,7 @@ function! twitch#open_alternate(vim_command)
       exec a:vim_command . ' ' . target_path
     catch
       let n = 0
-      while n <= len(g:twitch#last_commands)
+      while n < len(g:twitch#last_commands)
         echom "Vim-Twitch ERR: '" . get(g:twitch#last_commands, n) . "' returned '" . get(g:twitch#found_paths, n) . "'."
         let n += 1
       endwhile
