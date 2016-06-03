@@ -29,12 +29,12 @@ function! twitch#open_alternate(vim_command)
       echom g:twitch#find_cmd
       exec a:vim_command . ' ' . target_path
     catch
-      echoerr "Vim-Twitch ERR: couldn't open file"
       let n = 0
       while n <= len(g:last_commands)
-        echoerr "Vim-Twitch ERR: '" . get(g:twitch#last_commands, n) . "' returned '" . get(g:twitch#found_paths, n) . "'."
+        echom "Vim-Twitch ERR: '" . get(g:twitch#last_commands, n) . "' returned '" . get(g:twitch#found_paths, n) . "'."
         let n += 1
       endwhile
+      echoerr "Vim-Twitch ERR: couldn't open file"
     endtry
   end
 endfunction
