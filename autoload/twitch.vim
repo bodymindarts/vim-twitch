@@ -26,7 +26,6 @@ function! twitch#open_alternate(vim_command)
 
   if target_path != ''
     try
-      echom g:twitch#find_cmd
       exec a:vim_command . ' ' . target_path
     catch
       let n = 0
