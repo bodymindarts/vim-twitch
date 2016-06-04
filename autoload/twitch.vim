@@ -84,10 +84,10 @@ endfunction
 
 function! s:execute_find(search_path, search_file_name)
   if a:search_path == ''
-    let path_arg = '-depth 1'
+    let path_arg = '-mindepth 1 -maxdepth 1'
   else
     let path_sections = strlen(substitute(a:search_path, '[^/]', '', 'g'))
-    let path_arg = "-path '" . a:search_path . "' -depth " . path_sections
+    let path_arg = "-path '" . a:search_path . "' -mindepth " . path_sections . " -maxdepth " . path_sections
   end
 
   let g:twitch#find_cmd = "find . " . path_arg . " -name '" . a:search_file_name . "' -type f"
