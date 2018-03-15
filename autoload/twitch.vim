@@ -62,6 +62,13 @@ function! s:search_paths(path)
     if raw_path =~ '/test/'
       let paths += [ substitute(same_dir, '/test/', '/main/', '') ]
     end
+    " for ReasonML
+    if raw_path =~ '/src/'
+      let paths += [ substitute(same_dir, '/src/', '/__tests__/', '') ]
+    end
+    if raw_path =~ '/__tests__/'
+      let paths += [ substitute(same_dir, '/__tests__/', '/src/', '') ]
+    end
     return paths
   end
 endfunction
